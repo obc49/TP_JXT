@@ -4,7 +4,7 @@ const password = require('./password')
 const bcrypt = require('bcrypt')
 const sel = 15
 
-console.log(password.hash('pedro'))
+//console.log(password.hash('pedro'))
 
 const USER = tcomb.struct({
     id: tcomb.String,
