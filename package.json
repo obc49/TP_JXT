@@ -21,10 +21,16 @@
   },
   "homepage": "https://github.com/stfanmichel/ESIR-TP5#readme",
   "devDependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
+    "helmet": "^3.16.0",
+    "jsonwebtoken": "^8.5.1",
     "mocha": "^5.2.0",
-    "nyc": "^13.3.0"
+    "nyc": "^13.3.0",
+    "tcomb": "^3.2.29",
+    "uuid": "^3.3.2"
   },
   "dependencies": {
     "express": "^4.16.4",
