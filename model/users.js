@@ -1,10 +1,7 @@
 const uuidv1 = require('uuid/v1')
 const tcomb = require('tcomb')
-const password = require('./password')
 const bcrypt = require('bcrypt')
-const sel = 15
-
-//console.log(password.hash('pedro'))
+const sel = 10
 
 const USER = tcomb.struct({
     id: tcomb.String,
@@ -19,25 +16,25 @@ const users = [
         id: '45745c60-7b1a-11e8-9c9c-2d42b21b1a3e',
         name: 'Pedro Ramirez',
         login: 'pedro',
-        password: password.hash('pedro'),
+        password: bcrypt.hashSync('pedro','sel'),
         age: 44
     }, {
         id: '456897d-98a8-78d8-4565-2d42b21b1a3e',
         name: 'Jesse Jones',
         login: 'jesse',
-        password: password.hash('jesse'),
+        password: bcrypt.hashSync('jesse','sel'),
         age: 48
     }, {
         id: '987sd88a-45q6-78d8-4565-2d42b21b1a3e',
         name: 'Rose Doolan',
         login: 'rose',
-        password: password.hash('rose'),
+        password: bcrypt.hashSync('rose','sel'),
         age: 36
     }, {
         id: '654de540-877a-65e5-4565-2d42b21b1a3e',
         name: 'Sid Ketchum',
         login: 'sid',
-        password: password.hash('sid'),
+        password: bcrypt.hashSync('pedro','sel'),
         age: 56
     }
 ]
