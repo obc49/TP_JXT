@@ -1,6 +1,6 @@
 const uuidv1 = require('uuid/v1')
-const tcomb = require('tcomb')
 const bcrypt = require('bcrypt')
+const tcomb = require('tcomb')
 const sel = 10
 
 const USER = tcomb.struct({
@@ -51,43 +51,75 @@ const getAll = () => {
 }
 
 const add = (user) => {
-    const newUser = {
-        ...user,
-        id: uuidv1()
-    }
-    if (validateUser(newUser)) {
-        users.push(newUser)
-    } else {
-        throw new Error('user.not.valid')
-    }
-    return newUser
+    return new Promise((resolve, sel)=> {
+        bcrypt
+            .hash(user.password, sel)
+            .then(hash => {
+                const newUser = {
+                    ...user,
+                    id: uuidv1(),
+                    password:password
+                }
+                if (validateUser(newUser)) {
+                    users.push(newUser)
+                  } else {
+                    throw new Error("user.not.valid")
+                  }
+                  resolve(newUser);
+                })
+                .catch(err => {
+                  reject()
+                })
+    })
 }
 
 const update = (id, newUserProperties) => {
+    return new Promise((resolve, reject) => {
     const usersFound = users.filter((user) => user.id === id)
 
     if (usersFound.length === 1) {
         const oldUser = usersFound[0]
-
-        const newUser = {
-            ...oldUser,
-            ...newUserProperties
-        }
-
+        if (newUserProperties.password) {
+            bcrypt
+              .hash(newUserProperties.password, salt_round)
+              .then(hash => {
+                newUserProperties.password = hash
+                const newUser = {
+                  ...oldUser,
+                  ...newUserProperties
+                };
         // Control data to patch
-        if (validateUser(newUser)) {
-            // Object.assign permet d'éviter la suppression de l'ancien élément puis l'ajout
-            // du nouveau Il assigne à l'ancien objet toutes les propriétés du nouveau
-            Object.assign(oldUser, newUser)
-            return oldUser
+                if (validateUser(newUser)) {
+        // Object.assign permet d'éviter la suppression de l'ancien élément puis l'ajout
+        // du nouveau Il assigne à l'ancien objet toutes les propriétés du nouveau
+                  Object.assign(oldUser, newUser)
+                  resolve(oldUser)
+                } else {
+                  reject("user.not.valid")
+                }
+              })
+              .catch(error => {
+                console.log("Error : " + error)
+              })
+          } else {
+            const newUser = {
+              ...oldUser,
+              ...newUserProperties
+            };
+            if (validateUser(newUser)) {
+              Object.assign(oldUser, newUser)
+              resolve(oldUser)
+            } else {
+              reject("user.not.valid")
+            }
+          }
         } else {
-            throw new Error('user.not.valid')
+          reject("user.not.found")
         }
-    } else {
-        throw new Error('user.not.found')
-    }
+    })
 }
-
+    
+                              
 const remove = (id) => {
     const indexFound = users.findIndex((user) => user.id === id)
     if (indexFound > -1) {
