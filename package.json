@@ -25,6 +25,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
     "commander": "^2.20.0",
+    "jsonwebtoken": "^8.5.1",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.10",
     "nyc": "^13.3.0"
@@ -32,7 +33,6 @@
   "dependencies": {
     "express": "^4.16.4",
     "helmet": "^3.15.1",
-    "jsonwebtoken": "^8.4.0",
     "path-to-regexp": "^3.0.0",
     "tcomb": "^3.2.29",
     "uuid": "^3.3.2"
