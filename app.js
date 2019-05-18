@@ -1,9 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const helmet = require('helmet')
-
 const usersRouter = require('./routes/users-v1')
 const usersModel = require('./model/users')
+const helmet = require('helmet')
+
 
 const useLoggerRouter = require("./routes/auth-v1")
 const loggerModel = require("./model/idp")

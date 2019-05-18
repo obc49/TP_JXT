@@ -16,25 +16,41 @@ const users = [
         id: '45745c60-7b1a-11e8-9c9c-2d42b21b1a3e',
         name: 'Pedro Ramirez',
         login: 'pedro',
+<<<<<<< HEAD
         password: bcrypt.hashSync('pedro',salt_round),
+=======
+        password: bcrypt.hashSync('pedro',sel),
+>>>>>>> 717f217945d0ee54126db307b48802109a1c9b1a
         age: 44
     }, {
         id: '456897d-98a8-78d8-4565-2d42b21b1a3e',
         name: 'Jesse Jones',
         login: 'jesse',
+<<<<<<< HEAD
         password: bcrypt.hashSync('jesse',salt_round),
+=======
+        password: bcrypt.hashSync('jesse',sel),
+>>>>>>> 717f217945d0ee54126db307b48802109a1c9b1a
         age: 48
     }, {
         id: '987sd88a-45q6-78d8-4565-2d42b21b1a3e',
         name: 'Rose Doolan',
         login: 'rose',
+<<<<<<< HEAD
         password: bcrypt.hashSync('rose',salt_round),
+=======
+        password: bcrypt.hashSync('rose',sel),
+>>>>>>> 717f217945d0ee54126db307b48802109a1c9b1a
         age: 36
     }, {
         id: '654de540-877a-65e5-4565-2d42b21b1a3e',
         name: 'Sid Ketchum',
         login: 'sid',
+<<<<<<< HEAD
         password: bcrypt.hashSync('pedro',salt_round),
+=======
+        password: bcrypt.hashSync('pedro',sel),
+>>>>>>> 717f217945d0ee54126db307b48802109a1c9b1a
         age: 56
     }
 ]
