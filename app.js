@@ -5,30 +5,33 @@ const usersModel = require('./model/users')
 const helmet = require('helmet')
 
 
-const useLoggerRouter = require("./routes/auth-v1")
+const loggerRouter = require("./routes/auth-v1")
 const loggerModel = require("./model/idp")
 const logger = loggerModel(usersModel)
 
 const app = express()
 
-let verifyacess = (req, res, next) => {
+app.use("v1/auth/login", (req, res, next) => {
     let token = req.header("Authorization")
     if (token) {
       token = token.replace("bearer ", "")
-      logger.verifyacess(token).then((decoded) => {
+      logger.verifyacess(token).then((trouver) => {
         next()
   
       }).catch(()=> {
-        res.status(401).json({ message: "Unauthorized" })
+        res
+          .status(401)
+          .json({ message: "Unauthorized" })
   
       })
     } else {
-      res.status(401).json({ message: "Unauthorized" })
+      res
+        .status(401)
+        .json({ message: "Unauthorized" })
     }
-  }
+  })
 
 app.use(bodyParser.json())
-app.use(/^(?!.*v1\/auth\/login).*$/, verifyacess);
 
 // Activation de Helmet
 app.use(helmet({noSniff: true}))
@@ -36,6 +39,6 @@ app.use(helmet({noSniff: true}))
 // On injecte le model dans les routers. Ceci permet de supprimer la dépendance
 // directe entre les routers et le modele
 app.use('/v1/users', usersRouter(usersModel))
-app.use("/v1/auth", useLoggerRouter(usersModel, logger))
+app.use("/v1/auth", loggerRouter(usersModel, logger))
 // For unit tests
 exports.app = app

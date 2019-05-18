@@ -5,7 +5,7 @@ let usersModel = undefined
 
 /* Control usermodel initialisation */
 router.use((req, res, next) => {
-  /* istanbul ignore if */
+ //istanbul ignore if
   if (!usersModel) {
     res
       .status(500)

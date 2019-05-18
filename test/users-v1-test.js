@@ -5,14 +5,25 @@ const {app} = require('../app')
 chai.should()
 chai.use(chaiHttp)
 
+let login = retour => {
+  chai
+    .request(app)
+    .post("/v1/auth/login")
+    .send({ login: "sid", password: "sidpass" })
+    .end((err, res) => {
+      let token = res.body.access_token
+      retour(token)
+    })
+}
 
 describe("Users tests", () => {
 
   it("should list ALL users on /v1/users GET", done => {
-   
+    login(token => {
       chai
         .request(app)
         .get("/v1/users")
+        .set("Authorization", `bearer ${token}`)
         .end((err, res) => {
           res
             .should
@@ -29,12 +40,15 @@ describe("Users tests", () => {
             .a("array")
           done()
         })
+      })
   })
 
   it("should list a SINGLE user on /v1/users/<id> GET", done => {
+    login(token => {
       chai
         .request(app)
         .get("/v1/users/45745c60-7b1a-11e8-9c9c-2d42b21b1a3e")
+        .set("Authorization", `bearer ${token}`)
         .end((err, res) => {
           res
             .should
@@ -61,13 +75,17 @@ describe("Users tests", () => {
             .equal("45745c60-7b1a-11e8-9c9c-2d42b21b1a3e")
           done()
         })
+
+    })
    
   })
 
   it("should list an UNKNOW user on /v1/users/<id> GET", done => {
+    login(token => {
       chai
         .request(app)
         .get("/v1/users/45745c60-unknow-2d42b21b1a3e")
+        .set("Authorization", `bearer ${token}`)
         .end((err, res) => {
           res
             .should
@@ -79,12 +97,15 @@ describe("Users tests", () => {
             .json
           done()
         })
+     })
   })
 
   it("should add a SINGLE user on /v1/users POST", done => {
+    login(token => {
       chai
         .request(app)
         .post("/v1/users")
+        .set("Authorization", `bearer ${token}`)
         .send({ name: "Robert", login: "roro", password: "motdpassroro", age: 23 })
         .end((err, res) => {
           res
@@ -137,12 +158,15 @@ describe("Users tests", () => {
             .equal("roro")
           done()
         })
+    })
   })
 
   it("should add a INVALID user on /v1/users POST", done => {
+    login(token => {
       chai
         .request(app)
         .post("/v1/users")
+        .set("Authorization", `bearer ${token}`)
         .send({ name: "Robert", login: "roro", age: 23, wrongparam: "value" })
         .end((err, res) => {
           res
@@ -154,12 +178,15 @@ describe("Users tests", () => {
             .be.json
           done()
         })
+    })
   })
 
   it("should add an EMPTY user on /v1/users POST", done => {
+    login(token => {
       chai
         .request(app)
         .post("/v1/users")
+        .set("Authorization", `bearer ${token}`)
         .end((err, res) => {
           res
             .should
@@ -171,12 +198,15 @@ describe("Users tests", () => {
             .json
           done()
         })
+    })
   })
 
   it("should update a SINGLE user on /v1/users/<id> PATCH", done => {
+    login(token => {
       chai
         .request(app)
         .patch("/v1/users/45745c60-7b1a-11e8-9c9c-2d42b21b1a3e")
+        .set("Authorization", `bearer ${token}`)
         .send({ name: "Robertinio", password: "passwdmodif" })
         .end((err, res) => {
           res
@@ -214,12 +244,15 @@ describe("Users tests", () => {
             .equal("pedro")
           done()
         })
+    })
   })
 
   it("should update a user with wrong parameters on /v1/users/<id> PATCH", done => {
+    login(token => {
       chai
         .request(app)
         .patch("/v1/users/45745c60-7b1a-11e8-9c9c-2d42b21b1a3e")
+        .set("Authorization", `bearer ${token}`)
         .send({ wrongparam1: "Robertinio" })
         .end((err, res) => {
           res
@@ -232,12 +265,15 @@ describe("Users tests", () => {
             .json
           done()
         })
+    })
   })
 
   it("should update a UNKNOW user on /v1/users/<id> PATCH", done => {
+    login(token => {
       chai
         .request(app)
         .patch("/v1/users/45745c60-unknow-2d42b21b1a3e")
+        .set("Authorization", `bearer ${token}`)
         .send({ name: "Robertinio" })
         .end((err, res) => {
           res
@@ -250,9 +286,11 @@ describe("Users tests", () => {
             .json
           done()
         })
+    })
   })
 
   it("should delete a SINGLE user on /v1/users/<id> DELETE", done => {
+    login(token => {
       chai
         .request(app)
         .delete("/v1/users/45745c60-7b1a-11e8-9c9c-2d42b21b1a3e")
@@ -264,9 +302,11 @@ describe("Users tests", () => {
             .status(200)
           done()
         })
+    })
   })
 
   it("should delete a UNKNOWN user on /v1/users/<id> DELETE", done => {
+    login(token => {
       chai
         .request(app)
         .delete("/v1/users/45745c60-unknown-2d42b21b1a3e")
@@ -278,9 +318,11 @@ describe("Users tests", () => {
             .status(404)
           done()
         })
+    })
   })
 
   it("should delete a NULL ID user on /v1/users/<id> DELETE", done => {
+    login(token => {
       chai
         .request(app)
         .delete("/v1/users/")
@@ -292,5 +334,6 @@ describe("Users tests", () => {
             .status(404)
           done()
         })
+      })
     })
 })

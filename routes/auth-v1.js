@@ -9,15 +9,21 @@ router.get("/verifyaccess", (req, res, next) => {
     if (token) {
       token = token.replace("bearer ", "")
       const access = loggerModel.verifyacess(token).then((trouver) => {
-        res.status(200).json({ message: "Ok" })
+        res
+           .status(200)
+           .json({ message: "Ok" })
   
       }).catch(()=> {usersModel = undefined
         loggerModel = undefined
         
-        res.status(401).json({ message: "Unauthorized" })
+        res
+           .status(401)
+           .json({ message: "Unauthorized" })
       })
     }else {
-      res.status(401).json({ message: "Unauthorized" })
+      res
+        .status(401) 
+        .json({ message: "Unauthorized" })
     }
   })
 
@@ -26,16 +32,22 @@ router.get("/verifyaccess", (req, res, next) => {
     const password = req.body.password
     if (login && password) {
       loggerModel.login(login, password).then(token => {
-        res.status(200).json({ message: "successful", access_token: token })
+          res
+           .status(200)
+           .json({ message: "successful", access_token: token })
       })
       .catch(() => {
-        res.status(401).json({ message: "Unauthorized" })
+        res
+           .status(401)
+           .json({ message: "Unauthorized" })
       })
     }else {
-      res.status(401).json({ message: "Unauthorized" })
+      res
+         .status(401)
+         .json({ message: "Unauthorized" })
     }
   })
-
+  
   module.exports = (user, logger) => {
     usersModel = user
     loggerModel = logger
