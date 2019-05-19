@@ -11,16 +11,16 @@
 Nous nous sommes inspirés du code déjà réalisé lors du TP4 et d'une spécification d'API REST au format Swagger.
 
 ## Objectifs :
-L'objectif de cette partie est de  de réaliser un serveur d'authentification afin de l'utiliser dans la seconde partie, les services d'arlete.
+L'objectif de cette partie est de réaliser un serveur d'authentification afin de l'utiliser dans la seconde partie, les services d'arlete.
 
 ## Fonctionnement du code
 
-Nous avons commencé par étendre le code du modèle de données du TP4 afin d'ajouter le notion de mot de passe utilisateur. Pour cela nous avons utilisé le module bcrypt. À chaque mot de passe nous ajoutons un sel avant de calculer son hash.
+Nous avons commencé par étendre le code du modèle de données du TP4 afin d'ajouter la notion de mot de passe utilisateur. Pour cela nous avons utilisé le module bcrypt. À chaque mot de passe nous ajoutons un sel avant de calculer son hash.
 
  ## Les méthodes login et verifyaccess
 
- nous avons implementé les login et verifyaccess dans le fichier Auth-v1.js de notre router et le fichier ipd.js de notre model. Dans le model, nous implementons d'abord une methode Myhash permettant de recuperer le mot de passe d'un utilisateur que nous utilisons ensuite dans notre methode login prend en paramètre le login et le mot de passe saisis. Nous comparons le mot de passe saisi et celui existant. S'ils correspondent alors on génère un jeton. Et la methode verifyaccess qui prend en parametre le jeton; permet de vérifier si le jeton est valide. 
- Dans notre router, lors d'un POST (router.post("/login", (req, res, next)), on recupère le login et le mot de passe saisis et on appelle la methode login (code metier) de notre model, qui renvoie soit un message 'successful' si le login et mot de passe sont OK  soit un message 'Unauthorized' sinon. Pour un GET (router.get("/verifyaccess", (req, res, next)). On vérifie si le jeton est valide. Afin de récupérer un jeton, nous réalisons un premier appel en POST au service /v1/auth/login.
+ Nous avons implementé les login et verifyaccess dans le fichier Auth-v1.js de notre router et le fichier ipd.js de notre model. Dans le model, nous implementons d'abord une méthode Myhash permettant de récupérer le mot de passe d'un utilisateur que nous utilisons ensuite dans notre méthode login qui prend en paramètre le login et le mot de passe saisis. Nous comparons le mot de passe saisi et celui existant. S'ils correspondent alors on génère un jeton. Et la methode verifyaccess qui prend en paramètre le jeton; permet de vérifier si le jeton est valide. 
+ Dans notre router, lors d'un POST (router.post("/login", (req, res, next)), on récupère le login et le mot de passe saisis et on appelle la méthode login (code métier) de notre model, qui renvoie soit un message 'successful' si le login et mot de passe sont OK  soit un message 'Unauthorized' sinon. Pour un GET (router.get("/verifyaccess", (req, res, next)). On vérifie si le jeton est valide. Afin de récupérer un jeton, nous réalisons un premier appel en POST au service /v1/auth/login.
 
 
 ## tests unitaires de l'API
