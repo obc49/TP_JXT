@@ -26,7 +26,7 @@ const login = (login, password) => {
                .compare(password, hash)
                .then((compare) => {
                   if (compare) {
-                    const token = jwt.sign(username, secret, (err, token) =>{
+                    const token = jwt.sign(login, secret, (err, token) =>{
                         if (err) {
                             reject()
                         } else {
