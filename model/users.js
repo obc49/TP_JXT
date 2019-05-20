@@ -58,7 +58,7 @@ const add = (user) => {
                 const newUser = {
                     ...user,
                     id: uuidv1(),
-                    password:password
+                    password: user.password
                 }
                 if (validateUser(newUser)) {
                     users.push(newUser)

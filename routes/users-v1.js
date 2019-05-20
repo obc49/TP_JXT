@@ -44,17 +44,19 @@ router.get('/:id', function (req, res, next) {
 })
 
 /* Add a new user. */
-router.post('/', function (req, res, next) {
+router.post('/', async function (req, res, next) {
   const newUser = req.body
 
   /* istanbul ignore else */
   if (newUser) {
     try {
-      const user = usersModel.add(newUser)
-      req
-        .res
-        .status(201)
-        .send(user)
+      const user = await usersModel.add(newUser)
+                 .then(user => {
+                    req
+                      .res
+                      .status(201)
+                      .send(user);
+      })
     } catch (exc) {
       res
         .status(400)

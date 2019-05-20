@@ -13,8 +13,9 @@ router.get("/verifyaccess", (req, res, next) => {
            .status(200)
            .json({ message: "Ok" })
   
-      }).catch(()=> {usersModel = undefined
-        loggerModel = undefined
+      }).catch(()=> {
+        //usersModel = undefined
+        //loggerModel = undefined
         
         res
            .status(401)
